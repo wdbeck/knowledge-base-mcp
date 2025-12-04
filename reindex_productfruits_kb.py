@@ -28,7 +28,7 @@ MIN_CHUNK_CHARS = 200
 
 # Pinecone settings
 PINECONE_NAMESPACE = ""
-PINECONE_INDEX_HOST = "https://discovered-knowledge-base-2sn742y.svc.aped-4627-b74a.pinecone.io"  # e.g. "your-index-xxxx.svc.pinecone.io"
+PINECONE_INDEX_HOST = os.environ.get("PINECONE_INDEX_HOST")  # e.g. "your-index-xxxx.svc.pinecone.io"
 
 # Batch sizes
 EMBED_BATCH_SIZE = 64
