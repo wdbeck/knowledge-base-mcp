@@ -74,13 +74,13 @@ def create_server():
     )
 
     @mcp.tool()
-    async def search(query: str, top_k: int = 8) -> Dict[str, List[Dict[str, Any]]]:
+    async def search(query: str, top_k: int = 50) -> Dict[str, List[Dict[str, Any]]]:
         """
         Search for documents using OpenAI embeddings + Pinecone.
 
         Args:
             query: Natural language search query.
-            top_k: Number of top matches to return (default: 8).
+            top_k: Number of top matches to return.
 
         Returns:
             { "results": [ { id, score, text, source_url, metadata }, ... ] }
