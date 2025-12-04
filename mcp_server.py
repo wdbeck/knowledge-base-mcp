@@ -26,7 +26,7 @@ PINECONE_API_KEY = os.environ.get("PINECONE_API_KEY")
 
 # For serverless Pinecone, this should be the index *host*,
 # e.g. "your-index-xxxx.svc.pinecone.io"
-PINECONE_INDEX_HOST = "https://discovered-knowledge-base-2sn742y.svc.aped-4627-b74a.pinecone.io"
+PINECONE_INDEX_HOST = os.environ.get("PINECONE_INDEX_HOST")
 
 # Namespace: "" means default namespace (same as __default__ in UI)
 PINECONE_NAMESPACE = os.environ.get("PINECONE_NAMESPACE", "")
