@@ -41,18 +41,23 @@ pc = Pinecone(api_key=PINECONE_API_KEY) if PINECONE_API_KEY else None
 index = pc.Index(host=PINECONE_INDEX_HOST) if pc and PINECONE_INDEX_HOST else None
 
 server_instructions = """
-This MCP server provides semantic search and retrieval over a Pinecone index
-that stores chunks of documentation (e.g. your ProductFruits knowledge base).
+This MCP server provides semantic search and retrieval over Discovered's
+knowledge base and internal manuals (hiring best practices, assessment manual, etc.).
 
 Tools:
-- search(query): find relevant chunks using OpenAI embeddings + Pinecone.
+- search(query, top_k, kb): find relevant chunks using OpenAI embeddings + Pinecone.
 - fetch(id): retrieve full chunk text/metadata by chunk id from Pinecone.
 
-Each chunk typically has metadata including:
-- text: the chunk content
-- source_url: original page URL
-- chunk_index: index within that page
-- kb: name of the knowledge base (e.g. "productfruits")
+When you use these tools to help a Discovered client:
+
+1. Write an answer that explains, in simple, step-by-step terms,
+   how the client can do what they are trying to do in Discovered.
+2. Use the search results as your source of truth.
+3. At the end of your answer, list the most relevant knowledge base article(s)
+   (usually 1, max 3) with their titles and links (from `source_url` or similar metadata),
+   so the client can read more if they want.
+4. If the knowledge base doesn’t cover the request, say so explicitly and offer
+   the closest guidance you can, but do not make up product behaviors.
 """
 
 
@@ -74,7 +79,7 @@ def create_server():
     )
 
     @mcp.tool()
-    async def search(query: str, top_k: int = 50) -> Dict[str, List[Dict[str, Any]]]:
+    async def search(query: str, top_k: int = 100) -> Dict[str, List[Dict[str, Any]]]:
         """
         Search for documents using OpenAI embeddings + Pinecone.
 
