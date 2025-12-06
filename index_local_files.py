@@ -21,8 +21,7 @@ MIN_CHUNK_CHARS = 200
 
 # Pinecone
 PINECONE_NAMESPACE = os.environ.get("PINECONE_NAMESPACE", "")
-PINECONE_INDEX_HOST = "https://discovered-knowledge-base-2sn742y.svc.aped-4627-b74a.pinecone.io"
-#os.environ.get("PINECONE_INDEX_HOST")
+PINECONE_INDEX_HOST = os.environ.get("PINECONE_INDEX_HOST")
 
 # Embeddings
 EMBED_MODEL = "text-embedding-3-large"

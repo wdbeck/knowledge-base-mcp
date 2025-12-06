@@ -81,14 +81,23 @@ def create_server():
     @mcp.tool()
     async def search(query: str, top_k: int = 100) -> Dict[str, List[Dict[str, Any]]]:
         """
-        Search for documents using OpenAI embeddings + Pinecone.
+        Search for relevant documentation and manuals.
+
+        Always use this tool before answering a Discovered product question.
+
+        The caller (LLM) should:
+        - Read the returned snippets and metadata.
+        - Write a simple, step-by-step explanation for the user.
+        - Then list 1–3 related KB articles using `source_url` / `source_file`
+        so the user can click through for more detail.
 
         Args:
-            query: Natural language search query.
-            top_k: Number of top matches to return.
+            query: Natural language question or topic.
+            top_k: Number of results to return.
+            kb: Optional filter (e.g. "productfruits", "manuals").
 
         Returns:
-            { "results": [ { id, score, text, source_url, metadata }, ... ] }
+            {"results": [{ "id", "score", "text", "source_url", "metadata" }, ...]}
         """
         query = (query or "").strip()
         if not query:
